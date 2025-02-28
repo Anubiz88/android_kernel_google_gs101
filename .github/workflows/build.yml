@@ -1,11 +1,11 @@
-name: Build A15 GS101 Kernel
+name: Build A14 GS101 Kernel
 
 on:
   workflow_dispatch:
   workflow_call:  # This allows this workflow to be called from another workflow
   
 jobs:
-  build-kernel-a15-gs101-kernelsu-susfs:
+  build-kernel-a14-gs101-kernelsu-susfs:
     runs-on: ubuntu-latest
 
     steps:
