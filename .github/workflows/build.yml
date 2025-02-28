@@ -1,4 +1,4 @@
-name: Build A15 Zuma Kernel
+name: Build A15 GS101 Kernel
 
 on:
   workflow_dispatch:
