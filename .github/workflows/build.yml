@@ -123,9 +123,12 @@ jobs:
           cd "$CONFIG"
           
           echo "Adding configuration settings to gs101_defconfig..."
+
+          # Add KSU configuration settings
+          echo "CONFIG_KSU=y" >> ./common/arch/arm64/configs/gs101_defconfig
+          echo "CONFIG_KSU_WITH_KPROBES=n" >> ./common/arch/arm64/configs/gs101_defconfig
           
           # Add SUSFS configuration settings
-          echo "CONFIG_KSU=y" >> ./arch/arm64/configs/gs101_defconfig
           echo "CONFIG_KSU_SUSFS=y" >> ./arch/arm64/configs/gs101_defconfig
           echo "CONFIG_KSU_SUSFS_HAS_MAGIC_MOUNT=y" >> ./arch/arm64/configs/gs101_defconfig
           echo "CONFIG_KSU_SUSFS_SUS_PATH=y" >> ./arch/arm64/configs/gs101_defconfig
@@ -142,9 +145,6 @@ jobs:
           echo "CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG=y" >> ./arch/arm64/configs/gs101_defconfig
           echo "CONFIG_KSU_SUSFS_OPEN_REDIRECT=y" >> ./arch/arm64/configs/gs101_defconfig
           echo "CONFIG_KSU_SUSFS_SUS_SU=n" >> ./arch/arm64/configs/gs101_defconfig
-          
-          # Add additional tmpfs config setting
-          #echo "CONFIG_TMPFS_XATTR=y" >> ./arch/arm64/configs/gs101_defconfig
 
       - name: Build the Kernel
         run: |
