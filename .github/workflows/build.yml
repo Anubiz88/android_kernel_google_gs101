@@ -148,10 +148,25 @@ jobs:
 
       - name: Download and Extract Toolchain
         run: |
-          wget https://mirrors.edge.kernel.org/pub/tools/crosstool/files/bin/x86_64/14.2.0/x86_64-gcc-14.2.0-nolibc-aarch64-linux.tar.gz
-          tar -xzf x86_64-gcc-14.2.0-nolibc-aarch64-linux.tar.gz
+          TOOLCHAIN_TAR="x86_64-gcc-14.2.0-nolibc-aarch64-linux.tar.gz"
+          TOOLCHAIN_DIR="gcc-14.2.0-nolibc/aarch64-linux"
+
+          # Download the toolchain
+          wget https://mirrors.edge.kernel.org/pub/tools/crosstool/files/bin/x86_64/14.2.0/$TOOLCHAIN_TAR
           
-          TOOLCHAIN_PATH="$PWD/x86_64-gcc-14.2.0-nolibc-aarch64-linux"
+          # Extract the toolchain
+          tar -xzf $TOOLCHAIN_TAR
+
+          # Set the correct toolchain path
+          TOOLCHAIN_PATH="$PWD/$TOOLCHAIN_DIR"
+
+          # Ensure the toolchain directory exists
+          if [ ! -d "$TOOLCHAIN_PATH" ]; then
+            echo "Error: Toolchain directory not found!"
+            exit 1
+          fi
+
+          # Export environment variables
           echo "TOOLCHAIN_PATH=$TOOLCHAIN_PATH" >> $GITHUB_ENV
           echo "CC=$TOOLCHAIN_PATH/bin/aarch64-linux-gcc" >> $GITHUB_ENV
           echo "CROSS_COMPILE=$TOOLCHAIN_PATH/bin/aarch64-linux-" >> $GITHUB_ENV
