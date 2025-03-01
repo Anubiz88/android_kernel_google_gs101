@@ -193,7 +193,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: my-artifact
-          path: android_kernel_google_gs101/out
+          path: android_kernel_google_gs101
 
       - name: Copy Images
         run: |
