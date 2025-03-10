@@ -203,7 +203,7 @@ jobs:
 
           echo "Copying Image.lz4 and concatenating DTB files..."
           cp ./out/arch/arm64/boot/Image.lz4 ../AnyKernel3/Image.lz4
-          cat ./out/google-modules/soc/gs/arch/arm64/boot/dts/google/*.dtb > ../AnyKernel3/dtb
+          cat ./out/arch/arm64/boot/dtbo.img > ../AnyKernel3/dtbo.img
 
       - name: Create ZIP Files for Different Formats
         run: |
@@ -211,13 +211,12 @@ jobs:
           cd ./AnyKernel3
 
           # Zip the files in the AnyKernel3 directory with a new naming convention
-          ZIP_NAME="A15_Sultan_KernelSU_SUSFS_Zuma.zip"
+          ZIP_NAME="A14_Sultan_KernelSU_SUSFS_GS101.zip"
           echo "Creating zip file $ZIP_NAME..."
           zip -r "../$ZIP_NAME" ./*
           
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: kernel-zuma
-          path: |
-            *.zip
+          name: kernel-gs101
+          path: AnyKernel3
