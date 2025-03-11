@@ -39,7 +39,7 @@ jobs:
           echo "Cloning AnyKernel3 and other dependencies..."
     
           # Define the branch names using the matrix values
-          ANYKERNEL_BRANCH="15.0.0-sultan-zuma"
+          ANYKERNEL_BRANCH="riri"
           SUSFS_BRANCH="gki-android13-5.10"
 
           # Debug print the branches
@@ -189,11 +189,11 @@ jobs:
           make gs101_defconfig -j$(nproc --all)
           make -j$(nproc --all)
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: my-artifact
-          path: android_kernel_google_gs101
+      #- name: Upload Artifact
+      #  uses: actions/upload-artifact@v4
+      #  with:
+      #    name: my-artifact
+      #    path: android_kernel_google_gs101
 
       - name: Copy Images
         run: |
