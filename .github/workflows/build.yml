@@ -219,4 +219,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: kernel-gs101
-          path: AnyKernel3
+          path: A14_Sultan_KernelSU_SUSFS_GS101.zip
