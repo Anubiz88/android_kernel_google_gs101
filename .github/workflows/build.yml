@@ -178,6 +178,12 @@ jobs:
           make gs101_defconfig -j$(nproc --all)
           make -j$(nproc --all)
 
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: out
+          path: ./android_kernel_google_gs101/out
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
