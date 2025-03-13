@@ -197,7 +197,6 @@ jobs:
 
       - name: Copy Images
         run: |
-          exit
           echo "Changing to configuration directory: $CONFIG..."
           cd "$CONFIG"
 
