@@ -188,7 +188,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: DTBO
-          path: ./android_kernel_google_gs101/out/arch/arm64/boot/dtbo.img
+          path: ./android_kernel_google_gs101/out/arch/arm64/boot/dts/dtbo.img
 
       - name: Copy Images
         run: |
@@ -197,7 +197,7 @@ jobs:
 
           echo "Copying Image.lz4 and concatenating DTB files..."
           cp ./out/arch/arm64/boot/Image.lz4 ../AnyKernel3/Image.lz4
-          cp ./out/arch/arm64/boot/dtbo.img ../AnyKernel3/dtbo.img
+          cp ./out/arch/arm64/boot/dts/dtbo.img ../AnyKernel3/dtbo.img
 
       - name: Create ZIP Files for Different Formats
         run: |
