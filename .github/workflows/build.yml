@@ -1,4 +1,4 @@
-name: Build A14 GS101 Kernel
+name: Build BluRaviole Pixel 6 Kernel
 
 on:
   workflow_dispatch:
@@ -45,7 +45,7 @@ jobs:
           echo "Using branch for SUSFS: $SUSFS_BRANCH"
 
           # Clone repositories using the branch names
-          git clone https://github.com/TheWildJames/AnyKernel3.git -b "$ANYKERNEL_BRANCH"
+          git clone https://github.com/RiRiRawrZ615/AnyKernel3.git -b "$ANYKERNEL_BRANCH"
           git clone https://gitlab.com/simonpunk/susfs4ksu.git -b "$SUSFS_BRANCH"
           git clone https://github.com/TheWildJames/kernel_patches.git
           git clone https://github.com/RiRiRawrZ615/android_kernel_google_gs101 -b android-gs-bluraviole-5.10-android14-qpr2-monolithic
@@ -191,7 +191,7 @@ jobs:
           echo "Navigating to AnyKernel3 directory..."
           cd ./AnyKernel3
           # Zip the files in the AnyKernel3 directory with a new naming convention
-          ZIP_NAME="A14_Sultan_KernelSU_SUSFS_GS101.zip"
+          ZIP_NAME="BluRaviole_KSU_NEXT_DEV_SUSFS.zip"
           echo "Creating zip file $ZIP_NAME..."
           zip -r "../$ZIP_NAME" ./*
           
@@ -199,4 +199,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: kernel-gs101
-          path: A14_Sultan_KernelSU_SUSFS_GS101.zip
+          path: BluRaviole_KSU_NEXT_DEV_SUSFS.zip
