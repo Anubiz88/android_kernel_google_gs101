@@ -182,19 +182,19 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: out
-          path: ./android_kernel_google_gs101/out
+          path: /home/runner/work/android_kernel_google_gs101/android_kernel_google_gs101/android_kernel_google_gs101/out
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: IMAGE
-          path: ./android_kernel_google_gs101/out/arch/arm64/boot/Image.lz4
+          path: /home/runner/work/android_kernel_google_gs101/android_kernel_google_gs101/android_kernel_google_gs101/out/arch/arm64/boot/Image.lz4
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: DTBO
-          path: ./android_kernel_google_gs101/out/arch/arm64/boot/dts/dtbo.img
+          path: /home/runner/work/android_kernel_google_gs101/android_kernel_google_gs101/android_kernel_google_gs101/out/arch/arm64/boot/dts/dtbo.img
 
       - name: Copy Images
         run: |
