@@ -186,12 +186,6 @@ jobs:
           echo "Copying Image.lz4 and concatenating DTB files..."
           cp ./out/arch/arm64/boot/Image.lz4 ../AnyKernel3/Image.lz4
           cp ./out/arch/arm64/boot/dts/google/dtbo.img ../AnyKernel3/dtbo.img
-          cp ./arch/arm64/boot/Image.lz4 ../AnyKernel3/Image.lz4
-          cp ./arch/arm64/boot/dts/google/dtbo.img ../AnyKernel3/dtbo.img
-          cp /out/arch/arm64/boot/Image.lz4 ../AnyKernel3/Image.lz4
-          cp /out/arch/arm64/boot/dts/google/dtbo.img ../AnyKernel3/dtbo.img
-          cp /arch/arm64/boot/Image.lz4 ../AnyKernel3/Image.lz4
-          cp /arch/arm64/boot/dts/google/dtbo.img ../AnyKernel3/dtbo.img
       - name: Create ZIP Files for Different Formats
         run: |
           echo "Navigating to AnyKernel3 directory..."
