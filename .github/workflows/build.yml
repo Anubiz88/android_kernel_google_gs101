@@ -181,7 +181,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: KERNEL
+          name: IMAGE
           path: ./android_kernel_google_gs101/out/arch/arm64/boot/Image.lz4
 
       - name: Upload Artifact
