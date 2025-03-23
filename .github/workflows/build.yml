@@ -78,13 +78,16 @@ jobs:
           # Change to common directory and apply SUSFS patch
           cd ..
           patch -p1 < 50_add_susfs_in_gki-android13-5.10.patch || true
+      
       - name: Apply KSU Hooks
         run: |
           echo "Changing to configuration directory: $CONFIG..."
           cd "$CONFIG"
           # Apply additional patch
-          cp ../kernel_patches/next/next_hooks.patch ./
-          patch -p1 --fuzz=3 < ./next_hooks.patch
+          #cp ../kernel_patches/next/next_hooks.patch ./
+          #patch -p1 --fuzz=3 < ./next_hooks.patch
+          cp ../kernel_patches/next/syscall64_hooks.patch ./
+          patch -p1 --fuzz=3 < ./syscall64_hooks.patch
           
       - name: Apply Hide Stuff Patches
         run: |
