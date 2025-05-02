@@ -1,7 +1,6 @@
 name: Build BluRaviole Pixel 6 Kernel
 
 on:
-  push:
   workflow_dispatch:
   workflow_call:  # This allows this workflow to be called from another workflow
   
