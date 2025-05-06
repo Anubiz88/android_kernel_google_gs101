@@ -5,7 +5,7 @@ on:
   workflow_call:  # This allows this workflow to be called from another workflow
   
 jobs:
-  build-kernel-a15-gs101-kernelsu-susfs:
+  build-kernel-a15-gs101-kernelsu:
     runs-on: ubuntu-latest
 
     steps:
