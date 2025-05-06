@@ -171,8 +171,13 @@ jobs:
           cd "$CONFIG"
           
           echo "Building the kernel..."
+          export ARCH=arm64
+          export SUBARCH=arm64
+          export CROSS_COMPILE=aarch64-linux-
+          export CC=aarch64-linux-gcc
           make raviole_defconfig -j$(nproc --all)
           make -j$(nproc --all)
+          make dtbo.img -j$(nproc --all)
       #- name: Upload Artifact
       #  uses: actions/upload-artifact@v4
       #  with:
