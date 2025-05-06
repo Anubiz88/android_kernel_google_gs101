@@ -171,12 +171,8 @@ jobs:
           cd "$CONFIG"
           
           echo "Building the kernel..."
-          export ARCH=arm64
-          export SUBARCH=arm64
-          export CROSS_COMPILE=aarch64-linux-
-          export CC=aarch64-linux-gcc
-          make gs101_defconfig -j$(nproc --all)
-          make -j$(nproc --all)
+          make ${{ inputs.codename }}_defconfig -j$(nproc --all)
+          make -j$(nproc --all
       #- name: Upload Artifact
       #  uses: actions/upload-artifact@v4
       #  with:
