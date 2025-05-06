@@ -5,7 +5,7 @@ on:
   workflow_call:  # This allows this workflow to be called from another workflow
   
 jobs:
-  build-kernel-a14-gs101-kernelsu-susfs:
+  build-kernel-a15-gs101-kernelsu-susfs:
     runs-on: ubuntu-latest
 
     steps:
@@ -38,7 +38,7 @@ jobs:
     
           # Define the branch names using the matrix values
           ANYKERNEL_BRANCH="riri"
-          SUSFS_BRANCH="gki-android14-6.1"
+          SUSFS_BRANCH="gki-android15-6.1.x"
 
           # Debug print the branches
           echo "Using branch for AnyKernel3: $ANYKERNEL_BRANCH"
@@ -65,7 +65,7 @@ jobs:
           echo "Applying SUSFS patches..."
           
           # Copy SUSFS patches
-          cp ../susfs4ksu/kernel_patches/50_add_susfs_in_gki-android14-6.1.patch ./
+          cp ../susfs4ksu/kernel_patches/50_add_susfs_in_gki-android15-6.1.patch ./
           cp ../susfs4ksu/kernel_patches/fs/* ./fs/
           cp ../susfs4ksu/kernel_patches/include/linux/* ./include/linux/
           cd ./KernelSU-Next
@@ -76,7 +76,7 @@ jobs:
           
           # Change to common directory and apply SUSFS patch
           cd ..
-          patch -p1 < 50_add_susfs_in_gki-android13-5.10.patch || true
+          patch -p1 < 50_add_susfs_in_gki-android15-6.1.patch || true
       
       - name: Apply KSU Hooks
         run: |
@@ -103,16 +103,7 @@ jobs:
           # Apply additional patch
           sed -i "s/poofed_size: '%u'/poofed_size: '%llu'/g" ./fs/susfs.c
           sed -i "s/length of string: %u/length of string: %lu/g" ./fs/susfs.c
-      #    cp ../kernel_patches/mount.h_fix.patch ./
-      #    patch -p1 --fuzz=3 < ./mount.h_fix.patch
-      #    cp ../kernel_patches/sched.h_fix.patch ./
-      #    patch -p1 --fuzz=3 < ./sched.h_fix.patch
-      #    cp ../kernel_patches/user.h_fix.patch ./
-      #    patch -p1 --fuzz=3 < ./user.h_fix.patch
 
-      
-      #    sed -i "s/poofed_size: '%u'/poofed_size: '%llu'/g" ./fs/susfs.c
-      #    sed -i "s/length of string: %u/length of string: %lu/g" ./fs/susfs.c
 
       - name: Add SUSFS Configuration Settings
         run: |
@@ -180,8 +171,9 @@ jobs:
       #    path: android_kernel_google_gs101
 
       - name: Copy Images
-        run: |
-          echo "Changing to configuration directory: $CONFIG..."
+      tools/bazel run --lto=thin //common:kernel_aarch64_dist
+        #run: |
+         # echo "Changing to configuration directory: $CONFIG..."
           cd "$CONFIG"
           echo "Copying Image.lz4 and concatenating DTB files..."
           cp ./out/arch/arm64/boot/Image.lz4 ../AnyKernel3/Image.lz4
