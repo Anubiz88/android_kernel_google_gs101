@@ -172,7 +172,7 @@ jobs:
           
           echo "Building the kernel..."
           make ${{ inputs.codename }}_defconfig -j$(nproc --all)
-          make -j$(nproc --all
+          make -j$(nproc --all)
       #- name: Upload Artifact
       #  uses: actions/upload-artifact@v4
       #  with:
