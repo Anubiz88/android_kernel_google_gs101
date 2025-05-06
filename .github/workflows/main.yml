@@ -38,7 +38,7 @@ jobs:
     
           # Define the branch names using the matrix values
           ANYKERNEL_BRANCH="riri"
-          SUSFS_BRANCH="gki-android15-6.1"
+          SUSFS_BRANCH="gki-android14-6.1"
 
           # Debug print the branches
           echo "Using branch for AnyKernel3: $ANYKERNEL_BRANCH"
@@ -65,7 +65,7 @@ jobs:
           echo "Applying SUSFS patches..."
           
           # Copy SUSFS patches
-          cp ../susfs4ksu/kernel_patches/50_add_susfs_in_gki-android15-6.1.patch ./
+          cp ../susfs4ksu/kernel_patches/50_add_susfs_in_gki-android14-6.1.patch ./
           cp ../susfs4ksu/kernel_patches/fs/* ./fs/
           cp ../susfs4ksu/kernel_patches/include/linux/* ./include/linux/
           cd ./KernelSU-Next
