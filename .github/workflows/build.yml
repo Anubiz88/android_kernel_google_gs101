@@ -1,0 +1,85 @@
+name: Build BluRaviole Pixel 6 Kernel
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  build-kernel-a15-gs101-kernelsu-susfs:
+    runs-on: ubuntu-latest
+    defaults:  # Added strict error handling [4]
+      run:
+        shell: bash
+
+    steps:
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@master
+        with:
+          root-reserve-mb: 8192
+          temp-reserve-mb: 2048
+          swap-size-mb: 8192
+          remove-dotnet: 'true'
+          remove-android: 'true'
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y gcc-aarch64-linux-gnu libncurses-dev flex bison openssl libssl-dev dkms
+
+      - name: Set CONFIG variable
+        run: |
+          echo "CONFIG=android_kernel_google_gs101" >> $GITHUB_ENV
+
+      - name: Clone repositories
+        run: |
+          git clone https://github.com/RiRiRawrZ615/AnyKernel3.git -b riri
+          git clone https://gitlab.com/simonpunk/susfs4ksu.git -b gki-android15-6.1.x
+          git clone https://github.com/Anubiz88/android_kernel_google_gs101 -b android-gs-raviole-6.1-android15-qpr2
+
+      - name: Add KernelSU
+        run: |
+          cd "$CONFIG"
+          curl -LSs "https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/next/kernel/setup.sh" | bash -s next
+
+      - name: Apply SUSFS patches
+        run: |
+          cd "$CONFIG"
+          # Apply core SUSFS patch
+          patch -p1 < ../susfs4ksu/kernel_patches/50_add_susfs_in_gki-android15-6.1.patch || { echo "❌ SUSFS patch failed"; exit 1; }
+          
+          # Apply filesystem patches
+          cd fs && patch -p1 < ../../susfs4ksu/kernel_patches/fs/overlayfs.patch
+          cd ../include/linux && patch -p1 < ../../../susfs4ksu/kernel_patches/include/linux/susfs.h.patch
+
+      - name: Configure kernel
+        run: |
+          cd "$CONFIG"
+          # Required for 6.1.130 [1][7]
+          echo "CONFIG_LTO_CLANG=y" >> ./arch/arm64/configs/gs101_defconfig
+          echo "CONFIG_KSU_SUSFS_COMPAT_6_1=y" >> ./arch/arm64/configs/gs101_defconfig
+          echo "CONFIG_KSU_SUSFS_HAS_MAGIC_MOUNT=y" >> ./arch/arm64/configs/gs101_defconfig
+          # Keep other SUSFS configs from your original
+
+      - name: Setup toolchain
+        uses: android-actions/setup-android-build-tools@v2
+        with:
+          ndk-version: 25c  # Recommended for Android 15 [5][7]
+
+      - name: Build kernel
+        run: |
+          cd "$CONFIG"
+          # Using Kleaf build system for 6.1.x [7]
+          tools/bazel run --lto=thin //common:kernel_aarch64_dist
+
+      - name: Package artifacts
+        run: |
+          cd AnyKernel3
+          cp ../android_kernel_google_gs101/out/arch/arm64/boot/Image.lz4 .
+          cp ../android_kernel_google_gs101/out/arch/arm64/boot/dts/google/dtbo.img .
+          zip -r ../BluRaviole_KSU_NEXT_DEV_SUSFS.zip .
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: kernel-gs101
+          path: BluRaviole_KSU_NEXT_DEV_SUSFS.zip
