@@ -1,4 +1,4 @@
-name: Build BluRaviole Pixel 6 Kernel
+name: Build BluRaviole Pixel 6 Kernel v2
 
 on:
   workflow_dispatch:
