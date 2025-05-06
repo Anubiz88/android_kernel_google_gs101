@@ -2,7 +2,7 @@ name: Build BluRaviole Pixel 6 Kernel
 
 on:
   workflow_dispatch:
-  workflow_call:  # This allows this workflow to be called from another workflow
+ 
   
 jobs:
   build-kernel-a15-gs101-kernelsu:
