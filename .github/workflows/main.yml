@@ -178,21 +178,10 @@ jobs:
           make raviole_defconfig -j$(nproc --all)
           make -j$(nproc --all)
           make dtbs -j$(nproc --all)
-    
-    # Check if dtbo.img exists anywhere
-    find ./out -name "dtbo.img" || echo "dtbo.img not found, generating manually"
-    
-  
-    # Find and run the mkdtboimg.py script
-find . -name "mkdtboimg.py" | xargs python3 - create ./out/arch/arm64/boot/dts/google/dtbo.img --page_size=4096 $(find ./out/arch/arm64/boot/dts/google/ -name "*.dtbo")
+          find ./out -name "dtbo.img" || echo "dtbo.img not found, generating manually"
+          find . -name "mkdtboimg.py" | xargs python3 - create ./out/arch/arm64/boot/dts/google/dtbo.img --page_size=4096 $(find ./out/arch/arm64/boot/dts/google/ -name "*.dtbo")
+          ls -la ./out/arch/arm64/boot/dts/google/dtbo.img || echo "Failed to create dtbo.img"
 
-# Verify the file exists before copying
-ls -la ./out/arch/arm64/boot/dts/google/dtbo.img || echo "Failed to create dtbo.img"
-      #- name: Upload Artifact
-      #  uses: actions/upload-artifact@v4
-      #  with:
-      #    name: my-artifact
-      #    path: android_kernel_google_gs101
 
       - name: Copy Images
         run: |
